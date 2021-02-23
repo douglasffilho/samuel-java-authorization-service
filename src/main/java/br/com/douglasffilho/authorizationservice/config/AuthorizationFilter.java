@@ -23,6 +23,14 @@ public class AuthorizationFilter extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/users/authenticate").permitAll()
+                .antMatchers(
+                        "/swagger-ui.html**",
+                        "/webjars/**",
+                        "/swagger-resources/**",
+                        "/api-docs/**",
+                        "/api/api-docs/**",
+                        "/v2/api-docs/**",
+                        "/api/v2/api-docs/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new TokenValidationFilter(authenticationManager(), JwtToken.TOKEN))
